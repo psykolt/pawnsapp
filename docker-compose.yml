@@ -1,0 +1,43 @@
+networks:
+    pawns-docker:
+        name: pawns-app
+
+services:
+    pawns-mysql:
+        image: mysql:8.0.29
+        container_name: pawns-mysql
+        ports:
+            - 3906:3306
+        volumes:
+            - .database/instances/mysql8:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: pawns
+            MYSQL_USER: laravel
+            MYSQL_PASSWORD: secret
+            MYSQL_ROOT_PASSWORD: secret
+        networks:
+            - pawns-docker
+
+    pawns-api:
+        build:
+            args:
+                user: laravel
+                uid: 1000
+            context: ./
+            dockerfile: docker/Dockerfile
+        container_name: pawns-api
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        networks:
+            - pawns-docker
+        ports:
+            - "8880:80"
+
+    pawns-redis:
+        container_name: pawns-redis
+        hostname: pawns-redis
+        image: "redis:6"
+        networks:
+            - pawns-docker
