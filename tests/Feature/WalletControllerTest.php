@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Enums\Currency;
+use App\Mail\TransactionClaimed;
 use App\Models\PointsTransaction;
 use App\Models\Wallet;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class WalletControllerTest extends TestCase
@@ -13,7 +16,10 @@ class WalletControllerTest extends TestCase
     use WithFaker;
     use RefreshDatabase;
 
-    public function testShowWallet()
+    /**
+     * @return void
+     */
+    public function testShowWallet(): void
     {
         $user = $this->sanctumLogin();
         $wallet = Wallet::factory()->for($user)->create([
@@ -48,8 +54,26 @@ class WalletControllerTest extends TestCase
      */
     public function testClaimTransaction(): void
     {
-        $response = $this->get('/');
+        $user = $this->sanctumLogin();
+        $wallet = Wallet::factory()->for($user)->create([
+            'amount' => 0,
+            'currency' => Currency::USD->value,
+        ]);
+
+        $pointsTransaction = PointsTransaction::factory()->for($user)->create(['points' => 100]);
+
+        Mail::spy();
+
+        $response = $this->post(route('wallet.claimTransaction', $pointsTransaction->uuid));
 
         $response->assertStatus(200);
+
+        $pointsTransaction->refresh();
+        $wallet->refresh();
+
+        $this->assertTrue($pointsTransaction->claimed);
+        $this->assertEquals($wallet->amount, 1);
+
+        Mail::assertSent(TransactionClaimed::class);
     }
 }

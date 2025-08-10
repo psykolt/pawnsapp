@@ -4,12 +4,10 @@ namespace Tests\Feature;
 
 use App\Enums\QuestionType;
 use App\Enums\TransactionType;
-use App\Mail\TransactionClaimed;
 use App\Models\ProfilingQuestion;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class UserControllerTest extends TestCase
@@ -33,7 +31,6 @@ class UserControllerTest extends TestCase
     public function testUpdateProfileSuccess(): void
     {
         $user = $this->sanctumLogin();
-        Mail::spy();
 
         $questions = ProfilingQuestion::factory(2)
             ->sequence(
@@ -54,9 +51,6 @@ class UserControllerTest extends TestCase
         $response = $this->patch(route('user.updateProfile'), $request);
 
         $response->assertStatus(200);
-
-        Mail::assertSent(TransactionClaimed::class);
-
         $this->assertDatabaseHas('users__profiles', ['user_id' => $user->id]);
         $this->assertDatabaseHas('points_transactions', [
             'user_id' => $user->id,
