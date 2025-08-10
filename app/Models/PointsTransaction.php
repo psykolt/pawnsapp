@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class PointsTransaction extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserPointsTransactionFactory> */
+    /** @use HasFactory<\Database\Factories\PointsTransactionFactory> */
     use HasFactory;
     use HasUuids;
 
