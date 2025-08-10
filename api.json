@@ -10,6 +10,38 @@
         }
     ],
     "paths": {
+        "/profiling": {
+            "get": {
+                "operationId": "profiling.getQuestions",
+                "summary": "Get profiling questions",
+                "tags": [
+                    "Profiling"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of `ProfilingQuestionResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ProfilingQuestionResource"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/user/register": {
             "post": {
                 "operationId": "user.register",
@@ -35,19 +67,27 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "user": {
-                                            "type": "string"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "enum": [
-                                                "User created successfully."
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "user": {
+                                                    "type": "string"
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "User created successfully."
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "user",
+                                                "message"
                                             ]
                                         }
                                     },
                                     "required": [
-                                        "user",
-                                        "message"
+                                        "data"
                                     ]
                                 }
                             }
@@ -84,16 +124,24 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "success": {
-                                            "type": "boolean"
-                                        },
-                                        "token": {
-                                            "type": "string"
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "success": {
+                                                    "type": "boolean"
+                                                },
+                                                "token": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "success",
+                                                "token"
+                                            ]
                                         }
                                     },
                                     "required": [
-                                        "success",
-                                        "token"
+                                        "data"
                                     ]
                                 }
                             }
@@ -101,6 +149,68 @@
                     },
                     "401": {
                         "$ref": "#/components/responses/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/user/profile": {
+            "patch": {
+                "operationId": "user.updateProfile",
+                "summary": "Update User profile",
+                "tags": [
+                    "User"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateProfileRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "425": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "enum": [
+                                                "Profile update is not allowed. Please try again tomorrow."
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "$ref": "#/components/responses/ValidationException"
@@ -128,6 +238,34 @@
                 ],
                 "title": "LoginRequest"
             },
+            "ProfilingQuestionResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "question": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "options": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {}
+                    }
+                },
+                "required": [
+                    "id",
+                    "question",
+                    "type",
+                    "options"
+                ],
+                "title": "ProfilingQuestionResource"
+            },
             "RegisterRequest": {
                 "type": "object",
                 "properties": {
@@ -152,6 +290,30 @@
                     "password_confirmation"
                 ],
                 "title": "RegisterRequest"
+            },
+            "UpdateProfileRequest": {
+                "type": "object",
+                "properties": {
+                    "answers": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "value": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "id",
+                                "value"
+                            ]
+                        }
+                    }
+                },
+                "title": "UpdateProfileRequest"
             }
         },
         "responses": {
