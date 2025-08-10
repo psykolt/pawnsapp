@@ -3,14 +3,15 @@
 namespace App\Listeners;
 
 use App\Events\RewardUser;
+use App\Services\WalletService;
 use Illuminate\Support\Facades\Log;
 
 class RewardListener
 {
     /**
-     * Create the event listener.
+     * @param WalletService $walletService
      */
-    public function __construct()
+    public function __construct(private readonly WalletService $walletService)
     {
     }
 
@@ -20,5 +21,7 @@ class RewardListener
     public function handle(RewardUser $event): void
     {
         Log::info('User rewarded', $event->toArray());
+
+        $this->walletService->createTransaction($event->getUser(), $event->getType(), $event->getPoints());
     }
 }

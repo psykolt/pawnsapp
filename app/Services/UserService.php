@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\DTOs\ProfileAnswerDTO;
+use App\Enums\Currency;
+use App\Enums\TransactionType;
 use App\Events\RewardUser;
 use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
@@ -33,6 +35,8 @@ class UserService
         ]);
 
         Log::info('User created ' .  $data['name']);
+
+        $user->wallet()->create(['amount' => 0, 'currency' => Currency::USD->value]);
 
         return $user;
     }
@@ -78,6 +82,6 @@ class UserService
             $this->profilingService->saveProfile($user->id, $answer);
         }
 
-        RewardUser::dispatch($user, 'profile.updated', 5);
+        RewardUser::dispatch($user, TransactionType::PROFILE_UPDATED->value, 5);
     }
 }

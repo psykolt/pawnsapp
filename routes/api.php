@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfilingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(
@@ -29,5 +30,18 @@ Route::group(
     static function () {
         Route::get('/', [ProfilingController::class, 'getProfilingQuestions'])
             ->name('profiling.getQuestions');
+    }
+);
+
+Route::group(
+    [
+        'prefix' => 'wallet',
+        'namespace' => 'Wallet',
+    ],
+    static function () {
+        Route::get('/', [WalletController::class, 'getWallet'])
+            ->name('wallet.get');
+        Route::post('/{transaction}/claim', [WalletController::class, 'claimTransaction'])
+            ->name('wallet.claimTransaction');
     }
 );
