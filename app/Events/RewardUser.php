@@ -31,9 +31,33 @@ class RewardUser
     public function toArray(): array
     {
         return [
-            'user' => $this->user->id,
+            'user' => $this->user->email,
             'transaction_type' => $this->type,
             'points' => $this->points,
         ];
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPoints(): int
+    {
+        return $this->points;
     }
 }

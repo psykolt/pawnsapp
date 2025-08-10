@@ -6,6 +6,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -66,5 +67,21 @@ class User extends Authenticatable
     public function profile(): HasMany
     {
         return $this->hasMany(UserProfile::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function wallet(): HasOne
+    {
+        return $this->hasOne(Wallet::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(PointsTransaction::class, 'user_id', 'id');
     }
 }
