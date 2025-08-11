@@ -20,12 +20,12 @@ class ProfilingQuestion extends Model
     use HasFactory;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $guarded = [];
 
     /**
-     * @var string[]
+     * @var array<string, string>
      */
     protected $casts = [
         'options' => 'array',

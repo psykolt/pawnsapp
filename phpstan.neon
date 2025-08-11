@@ -1,0 +1,31 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+
+parameters:
+    paths:
+        - app/
+        - tests/
+        - database/seeders/
+        - database/factories/
+    fileExtensions:
+        - php
+    # Level 1-10, 10 is the highest level
+    level: 5
+
+    noEnvCallsOutsideOfConfig: false
+    treatPhpDocTypesAsCertain: false
+
+    excludePaths:
+        analyse:
+            - tests/TestCase.php
+            - app/Models/User.php
+
+#    ignoreErrors:
+#        - "#Call to an undefined method Mockery\\\\ExpectationInterface|Mockery\\\\HigherOrderMessage.#"
+#        - "#Access to an undefined property.#"
+#        - "#Request::session.#"
+#        - "#but returns Illuminate\\\\Database\\\\Eloquent\\\\Model.#"
+#        - "#is not covariant with PHPDoc type.#"
+#        - "#each\\(\\) expects callable.#"
+#        - "#map\\(\\) expects callable.#"

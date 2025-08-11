@@ -41,18 +41,6 @@ class ProfilingQuestionService
     }
 
     /**
-     * @param array $rules
-     * @param mixed $value
-     * @return void
-     */
-    private function processValidation(array $rules, mixed $value): void
-    {
-        $validator = Validator::make(['value' => $value], $rules);
-
-        $validator->validate();
-    }
-
-    /**
      * @param int $userId
      * @param ProfileAnswerDTO $answerDTO
      * @return void

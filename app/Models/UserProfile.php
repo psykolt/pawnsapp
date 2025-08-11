@@ -23,7 +23,7 @@ class UserProfile extends Model
     protected $table = 'users__profiles';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $guarded = [];
 

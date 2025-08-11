@@ -25,7 +25,7 @@ class PointsTransaction extends Model
     use HasUuids;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $guarded = [];
 
