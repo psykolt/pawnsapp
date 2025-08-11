@@ -2,6 +2,8 @@
 
 ### Start the project
 
+Docker Desktop is required to run the app out of the box.
+
 To start the application type: `make start`
 
 To stop the application type: `make stop`
@@ -18,3 +20,9 @@ at: http://localhost:8880/docs/api
 ### Database seeding
 
 To populate database with questions run: `php artisan db:seed --class=ProfilingQuestionSeeder`
+
+### Platform global statistics
+
+Global stats calculation is scheduled every day at 23:59
+
+To run scheduler: `php artisan schedule:work`

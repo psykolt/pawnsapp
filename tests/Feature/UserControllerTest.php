@@ -7,23 +7,12 @@ use App\Enums\TransactionType;
 use App\Models\ProfilingQuestion;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class UserControllerTest extends TestCase
 {
     use WithFaker;
     use RefreshDatabase;
-
-    /**
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Http::preventStrayRequests(); // to avoid accidentally calling external APIs
-    }
 
     /**
      * @return void

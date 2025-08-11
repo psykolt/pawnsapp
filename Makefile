@@ -22,9 +22,6 @@ migrate:
 
 reset:
 	$(DOCKER_PHP_CONTAINER_EXEC) $(CMD_ARTISAN) migrate:fresh --seed
-	$(DOCKER_PHP_CONTAINER_EXEC) $(CMD_ARTISAN) app:new-user developer password
-	$(DOCKER_PHP_CONTAINER_EXEC) $(CMD_ARTISAN) api:create-token local
-	$(DOCKER_PHP_CONTAINER_EXEC) $(CMD_ARTISAN) db:seed
 
 install:
 ifeq (,$(wildcard ./.env))

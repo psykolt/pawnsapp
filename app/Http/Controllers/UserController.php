@@ -15,8 +15,9 @@ class UserController extends Controller
     /**
      * @param UserService $userService
      */
-    public function __construct(private readonly UserService $userService)
-    {
+    public function __construct(
+        private readonly UserService $userService,
+    ) {
     }
 
     /**
@@ -27,7 +28,8 @@ class UserController extends Controller
      */
     public function register(RegisterRequest $request): JsonResponse
     {
-        $user = $this->userService->register($request->validated());
+        $ips = $request->ips();
+        $user = $this->userService->register($request->validated(), end($ips));
 
         return $this->success([
             'user' => $user->name . ' - ' . $user->email,

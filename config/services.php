@@ -34,5 +34,7 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'proxycheck' => [
+        'api_key' => env('PROXYCHECK_API_KEY'),
+    ],
 ];
