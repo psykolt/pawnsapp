@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "381713ef448eec7be6135c6deac065d7",
+    "content-hash": "e9548551bad271e9a75feaf3db898bd9",
     "packages": [
         {
             "name": "brick/math",
@@ -2898,6 +2898,54 @@
                 }
             ],
             "time": "2025-08-06T06:41:24+00:00"
+        },
+        {
+            "name": "proxycheck/proxycheck-php",
+            "version": "v0.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/proxycheck/proxycheck-php.git",
+                "reference": "ebc788ea9b10c79621350f9e9d798e411ae28a17"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/proxycheck/proxycheck-php/zipball/ebc788ea9b10c79621350f9e9d798e411ae28a17",
+                "reference": "ebc788ea9b10c79621350f9e9d798e411ae28a17",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "proxycheck\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "proxycheck and contributors",
+                    "homepage": "https://github.com/proxycheck/proxycheck-php/contributors"
+                }
+            ],
+            "description": "proxycheck.io PHP Library",
+            "homepage": "https://proxycheck.io/",
+            "keywords": [
+                "api",
+                "proxy checking",
+                "proxycheck"
+            ],
+            "support": {
+                "issues": "https://github.com/proxycheck/proxycheck-php/issues",
+                "source": "https://github.com/proxycheck/proxycheck-php/tree/v0.2.4"
+            },
+            "time": "2025-06-03T13:28:26+00:00"
         },
         {
             "name": "psr/clock",
