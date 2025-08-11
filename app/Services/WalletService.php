@@ -27,7 +27,7 @@ class WalletService
         /** @var Wallet $wallet */
         $wallet = $user->wallet()->first();
 
-        $convertedPoints = $this->convertPointsToCurrency($wallet->currency, $transaction);
+        $convertedPoints = $this->convertPointsToCurrency($wallet->currency, $transaction->points);
         $wallet->amount += $convertedPoints;
         $wallet->save();
         Log::info('Wallet updated', $wallet->toArray());
@@ -45,11 +45,11 @@ class WalletService
 
     /**
      * @param string $currency
-     * @param PointsTransaction $transaction
+     * @param int $points
      * @return float
      * @throws \Exception
      */
-    private function convertPointsToCurrency(string $currency, PointsTransaction $transaction): float
+    public function convertPointsToCurrency(string $currency, int $points): float
     {
         $rate = match ($currency) {
             Currency::USD->value => 0.01,
@@ -58,7 +58,7 @@ class WalletService
             default => throw new \Exception('Invalid currency'),
         };
 
-        return $transaction->points * $rate;
+        return $points * $rate;
     }
 
     /**
