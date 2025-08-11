@@ -6,6 +6,7 @@ use App\DTOs\ProfileAnswerDTO;
 use App\Enums\Currency;
 use App\Enums\TransactionType;
 use App\Events\RewardUser;
+use App\Jobs\ResolveUserCountry;
 use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Hash;
@@ -23,18 +24,20 @@ class UserService
 
     /**
      * @param array $data
+     * @param string $ip
      * @return User
      */
-    public function register(array $data): User
+    public function register(array $data, string $ip): User
     {
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'country' => 'TODO',
         ]);
 
         Log::info('User created ' .  $data['name']);
+        # we don't want to prolong request/response time, so will do it async via queues
+        ResolveUserCountry::dispatch($user, $ip);
 
         $user->wallet()->create(['amount' => 0, 'currency' => Currency::USD->value]);
 

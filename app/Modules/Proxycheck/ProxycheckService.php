@@ -2,8 +2,6 @@
 
 namespace App\Modules\Proxycheck;
 
-use Illuminate\Http\Request;
-
 class ProxycheckService
 {
     /**
@@ -11,17 +9,6 @@ class ProxycheckService
      */
     public function __construct(private readonly ApiClient $apiClient)
     {
-    }
-
-    /**
-     * @param Request $request
-     * @return string
-     */
-    public function getIpAddressFromRequest(Request $request): string
-    {
-        return $request->headers->get('X-Original-Forwarded-For') ??
-            $request->headers->get('X-Forwarded-For') ??
-            $request->getClientIp() ?? '';
     }
 
     /**
@@ -33,7 +20,7 @@ class ProxycheckService
         $result = $this->apiClient->callApi($ip);
 
         if (empty($result)) {
-            // API request failed, cannot determine if VPN
+            // API request failed, cannot determine the country
             return null;
         }
 

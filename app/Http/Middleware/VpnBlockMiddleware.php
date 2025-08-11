@@ -24,23 +24,12 @@ class VpnBlockMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $ip = $this->proxycheckService->getIpAddressFromRequest($request);
+        $ips = $request->ips();
 
-        if ($this->proxycheckService->isVpn($ip)) {
+        if ($this->proxycheckService->isVpn(end($ips))) {
             throw new AccessDeniedHttpException('You are using VPN');
         }
 
         return $next($request);
-    }
-
-    /**
-     * @param Request $request
-     * @return string
-     */
-    private function getIpAddress(Request $request): string
-    {
-        return $request->headers->get('X-Original-Forwarded-For') ??
-            $request->headers->get('X-Forwarded-For') ??
-            $request->getClientIp() ?? '';
     }
 }

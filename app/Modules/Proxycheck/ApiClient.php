@@ -45,7 +45,7 @@ class ApiClient
 
         $result = Cache::remember($cacheKey, now()->addDays(self::CACHE_FOR_DAYS), function () use ($ip, $options) {
             $response = proxycheck::check($ip, $options);
-            Log::info("Proxycheck result for $ip", $response);
+            Log::info("Proxycheck API call result for $ip", $response);
 
             return $response;
         });
