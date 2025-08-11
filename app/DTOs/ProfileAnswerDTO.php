@@ -5,12 +5,12 @@ namespace App\DTOs;
 class ProfileAnswerDTO
 {
     /**
-     * @var int|mixed
+     * @var int
      */
     private int $questionId;
 
     /**
-     * @var string|mixed
+     * @var string
      */
     private string $answer;
 

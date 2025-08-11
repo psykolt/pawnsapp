@@ -45,6 +45,7 @@ cache:
 style:
 	echo "- Laravel Pint -"
 	$(DOCKER_PHP_CONTAINER_EXEC) ./vendor/bin/pint -v
+	$(DOCKER_PHP_CONTAINER_EXEC) ./vendor/bin/phpstan analyse
 
 docs:
 	$(DOCKER_PHP_CONTAINER_EXEC) $(CMD_ARTISAN) scramble:export

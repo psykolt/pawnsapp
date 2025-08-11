@@ -21,7 +21,7 @@ class PlatformStatistic extends Model
     use HasFactory;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $guarded = [];
 }
